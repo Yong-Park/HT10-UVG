@@ -6,6 +6,10 @@ import java.util.Scanner;
 //parte de la funcion del main
 class Main{
 
+    
+    /** 
+     * @param args
+     */
     public static void main (String[] args){
         ArrayList<ArrayList<String>> obj = new ArrayList<>();
 
@@ -31,6 +35,17 @@ class Main{
             e.printStackTrace();
         }
 
+        addgrafo(obj);
+        scanner.close();
+        
+    }
+    
+    /** 
+     * @param obj
+     * @return ArrayList<Integer>
+     */
+    //para agregar datos al grafo
+    public static ArrayList<Integer> addgrafo(ArrayList<ArrayList<String>> obj){
         //ciclo para enviarlo al edge
         ArrayList<Integer> longitud = new ArrayList<>();
         ArrayList<String> Inicio = new ArrayList<>(); 
@@ -77,6 +92,21 @@ class Main{
         }
         //mostrar si los valores efectivamente se estan guardando 
         //System.out.println(valores);
+
+        //enviar a grafo
+        ArrayList<Integer> valoresCopy = new ArrayList<>();
+        valoresCopy = (ArrayList)valores.clone();
+        grafo(General,valores);
+        
+        return valoresCopy;
+    }
+    
+    /** 
+     * @param General
+     * @param valores
+     */
+    //para mostrar el grafo
+    public static void grafo(ArrayList<String> General, ArrayList<Integer> valores){
         //trabajando para realizar el floyd
         //codigo obtenido de https://www.sanfoundry.com/java-program-implement-floyd-warshall-algorithm/
         int INFINITY = 999;
@@ -115,8 +145,9 @@ class Main{
         System.out.println("______________________________________");
         Floyd floydwarshall = new Floyd(numberofvertices);
         floydwarshall.floydwarshall(adjacency_matrix);
-
+        
     }
+
     
 }
 

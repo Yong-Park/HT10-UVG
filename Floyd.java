@@ -11,6 +11,10 @@ public class Floyd {
         this.numberofvertices = numberofvertices;
     }
  
+    
+    /** 
+     * @param adjacencymatrix[][]
+     */
     public void floydwarshall(int adjacencymatrix[][])
     {
         for (int source = 1; source <= numberofvertices; source++)
