@@ -1,11 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 //parte de la funcion del main
 class Main{
-
+    public static int[][] datas;
+    public static ArrayList<String> ciudades;
     
     /** 
      * @param args
@@ -36,6 +38,8 @@ class Main{
         }
 
         addgrafo(obj);
+        System.out.println("__________________________________________");
+        menu();
         scanner.close();
         
     }
@@ -95,9 +99,9 @@ class Main{
 
         //enviar a grafo
         ArrayList<Integer> valoresCopy = new ArrayList<>();
-        valoresCopy = (ArrayList)valores.clone();
-        grafo(General,valores);
-        
+        valoresCopy = (ArrayList<Integer>)valores.clone();
+        ciudades=General;
+        grafo(valores,General);
         return valoresCopy;
     }
     
@@ -106,7 +110,8 @@ class Main{
      * @param valores
      */
     //para mostrar el grafo
-    public static void grafo(ArrayList<String> General, ArrayList<Integer> valores){
+    public static void grafo(ArrayList<Integer> valores,ArrayList<String> General ){
+        
         //trabajando para realizar el floyd
         //codigo obtenido de https://www.sanfoundry.com/java-program-implement-floyd-warshall-algorithm/
         int INFINITY = 999;
@@ -144,10 +149,61 @@ class Main{
         }
         System.out.println("______________________________________");
         Floyd floydwarshall = new Floyd(numberofvertices);
-        floydwarshall.floydwarshall(adjacency_matrix);
+        datas=floydwarshall.floydwarshall(adjacency_matrix);
+
+        
         
     }
+    public static void menu(){
+        Scanner scanner = new Scanner(System.in);
+        int pos1=0;
+        int pos2=0;
+        //crear menu
+        boolean menu=true;
+        do{
+            
+            System.out.println("1. Mostrar direccion mas corta entre dos lugares");
+            System.out.println("2. Mostrar el centro del grafo");
+            System.out.println("3. Salir");
+            int op = scanner.nextInt();
+            if(op==1){
+                System.out.println("Ingrese la ciudad 1");
+                String ciu1= scanner.next();
+                System.out.println("Ingrese la ciudad 2");
+                String ciu2= scanner.next();
 
+                for(int ciclo=0;ciclo<ciudades.size();ciclo++){
+                    if(ciudades.get(ciclo).toUpperCase().equals(ciu1.toUpperCase())){
+                        pos1=ciclo+1;
+                    }
+                    if(ciudades.get(ciclo).toUpperCase().equals(ciu2.toUpperCase())){
+                        pos2=ciclo+1;
+                    }
+                }
+                System.out.println("________________________________________________");
+                System.out.println(ciu1 + "->" + ciu2 + " = " + datas[pos1][pos2]);
+                System.out.println("________________________________________________");
+
+            }else if(op==2){
+                ArrayList<Integer> center = new ArrayList<>();
+                for(int i=1;i<=ciudades.size();i++){
+                    ArrayList<Integer> maximo = new ArrayList<>();
+                    for(int j=1;j<=ciudades.size();j++){
+                        maximo.add(datas[j][i]);
+                    }
+                    center.add(Collections.max(maximo));
+                }
+                int respuestaCentro = Collections.min(center);
+                System.out.println("________________________________________________");
+                System.out.println("El centro es: " + respuestaCentro);
+                System.out.println("________________________________________________");
+            }else if(op==3){
+                menu=false;
+                System.out.println("Espero que vuelvas pronto");
+            }
+        }while(menu);
+        scanner.close();
+    }
     
 }
 

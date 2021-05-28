@@ -15,7 +15,7 @@ public class Floyd {
     /** 
      * @param adjacencymatrix[][]
      */
-    public void floydwarshall(int adjacencymatrix[][])
+    public int[][] floydwarshall(int adjacencymatrix[][])
     {
         for (int source = 1; source <= numberofvertices; source++)
         {
@@ -52,5 +52,7 @@ public class Floyd {
             }
             System.out.println();
         }
+        return distancematrix;
     }
+
 }
